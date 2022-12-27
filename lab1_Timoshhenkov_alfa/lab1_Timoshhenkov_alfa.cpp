@@ -7,7 +7,7 @@ struct Pipestruct
 {
 	float length = 0;
 	float diameter = 0;
-	int working = 1;
+	bool working = 1;
 };
 
 struct Compressor_Station
@@ -43,13 +43,13 @@ float error_check(float check_variable)
 }
 
 
-float work_check(float check_variable)
+bool work_check(bool check_variable)
 {
-	while ((!check_variable) || (check_variable != 1) && (check_variable != 2))
+	while (cin.fail())
 	{
-		cout << "Input value must be a number 1 or a number 2: ";
+		cout << "Input value must be a number 0 or a number 1: ";
 		cin.clear();
-		cin.ignore(INT_MAX, '\n');
+		cin.ignore('\n');
 		cin >> check_variable;
 	}
 	return check_variable;
@@ -85,7 +85,7 @@ void pipe_adding(Pipestruct& pipe1)
 	cout << "Pipe diameter: ";
 	cin >> pipe1.diameter;
 	pipe1.diameter = value_check(pipe1.diameter);
-	cout << "Is pipe working? (If it is - type 2 else type 1): ";
+	cout << "Is pipe working? (If it is - type 1 else type 0): ";
 	cin >> pipe1.working;
 	pipe1.working = work_check(pipe1.working);
 	cout << endl;
@@ -94,7 +94,7 @@ void pipe_adding(Pipestruct& pipe1)
 void CS_adding(Compressor_Station& CS1)
 {
 	cout << "CS name: ";
-	cin >> CS1.name;
+	getline(cin,CS1.name,';');
 	cout << "Amount of departments: ";
 	cin >> CS1.department_amount;
 	CS1.department_amount = value_check(CS1.department_amount);
@@ -114,7 +114,7 @@ void inspect(Pipestruct& pipe1, Compressor_Station& CS1)
 		cout << "Pipe properties:" << endl;
 		cout << "Length: " << pipe1.length << endl;
 		cout << "Diameter " << pipe1.diameter << endl;
-		if (pipe1.working == 1) {
+		if (pipe1.working+1 == 1) {
 			cout << "Pipe is not working" << endl;
 		}
 		else
@@ -144,7 +144,7 @@ void inspect(Pipestruct& pipe1, Compressor_Station& CS1)
 void edit_pipe(Pipestruct& pipe1)
 {
 	if (pipe1.length > 0) {
-		cout << "Is pipe working? (If it is - type 2 else type 1): ";
+		cout << "Is pipe working? (If it is - type 1 else type 0): ";
 		cin >> pipe1.working;
 		pipe1.working = work_check(pipe1.working);
 	}
@@ -237,3 +237,4 @@ int main()
 	}
 	return 0;
 }
+
